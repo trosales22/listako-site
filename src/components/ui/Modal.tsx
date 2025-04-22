@@ -60,19 +60,22 @@ const Modal: React.FC<ModalProps> = ({
 
   const widthClass = (() => {
     const widths = {
-      'sm': "sm:max-w-sm",
-      'md': "sm:max-w-md",
-      'lg': "sm:max-w-lg",
-      'xl': "sm:max-w-2xl",
-      '2xl': "sm:max-w-3xl",
-      '3xl': "sm:max-w-4xl",
-      '4xl': "sm:max-w-5xl",
-      '5xl': "sm:max-w-6xl",
-      '6xl': "sm:max-w-7xl",
-      'full': "sm:w-full"
+      sm: "sm:max-w-sm",
+      md: "sm:max-w-md",
+      lg: "sm:max-w-lg",
+      xl: "sm:max-w-2xl",
+      "2xl": "sm:max-w-3xl",
+      "3xl": "sm:max-w-4xl",
+      "4xl": "sm:max-w-5xl",
+      "5xl": "sm:max-w-6xl",
+      "6xl": "sm:max-w-7xl",
+      full: "sm:w-full",
     };
   
-    return responsive ? `w-full ${widths[size] || ""}` : widths[size] || "";
+    // Set a reasonable default max width on mobile
+    const baseMobileMaxWidth = "max-w-[90vw]";
+  
+    return `${baseMobileMaxWidth} ${responsive ? widths[size] : ""}`;
   })();
 
   return (
@@ -81,7 +84,7 @@ const Modal: React.FC<ModalProps> = ({
       ref={modalRef}
       className={`modal ${responsive ? "sm:modal-middle" : "modal-bottom"}`}
     >
-      <div className={`modal-box ${widthClass} p-0 overflow-hidden`}>
+      <div className={`modal-box mx-4 ${widthClass} p-0 overflow-hidden rounded-lg shadow-md`}>
         <div className={`p-4 ${headerBgColor} flex justify-between items-center`}>
           <h3 className="font-bold text-lg">{title}</h3>
           {closeButton && (

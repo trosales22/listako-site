@@ -46,7 +46,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ onClose }) => {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
-            className="grid gap-4 p-4 bg-white rounded-lg"
+            className="flex flex-col gap-2 bg-white rounded-lg min-h-[300px]"
         >
             <Input
                 label="Task Name"
