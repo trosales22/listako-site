@@ -1,5 +1,5 @@
 import { FC, ReactNode, useState } from "react";
-import { Menu } from "lucide-react";
+import { Menu, UserCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "components/ui/components";
 
@@ -18,7 +18,6 @@ interface SidebarItem {
 interface NavbarProps {
   appName: string;
   bgColor?: string;
-  avatarSrc: string;
   dropdownItems: DropdownItem[];
   indicatorContent?: ReactNode;
   indicatorBadge?: string;
@@ -32,7 +31,6 @@ interface NavbarProps {
 const Navbar: FC<NavbarProps> = ({
   appName,
   bgColor = 'bg-base-100',
-  avatarSrc,
   dropdownItems,
   indicatorContent,
   indicatorBadge,
@@ -71,7 +69,7 @@ const Navbar: FC<NavbarProps> = ({
           <div className="dropdown dropdown-end">
             <div tabIndex={0} role="button" className="flex items-center space-x-3 p-2 cursor-pointer">
               <div className="w-10 h-10 rounded-full overflow-hidden">
-                <img alt={userName} src={avatarSrc} />
+                <UserCircle className="w-8 h-8 text-gray-400" />
               </div>
               <div className="flex flex-col text-left">
                 {userName && <span className={`text-md font-semibold ${userNameColor}`}>{userName}</span>}
@@ -104,7 +102,7 @@ const Navbar: FC<NavbarProps> = ({
 
               <div className="border-b border-white/20 pb-2 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full overflow-hidden">
-                  <img src={avatarSrc} alt="User" />
+                  <UserCircle className="w-8 h-8 text-gray-400" />
                 </div>
                 <div>
                   {userName && <div className={`text-sm font-semibold ${userNameColor}`}>{userName}</div>}

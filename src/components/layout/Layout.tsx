@@ -6,16 +6,16 @@ import { Button, Modal } from "components/ui/components";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "hooks/auth";
-import { useState } from "react";
 import Cookies from "js-cookie";
 import { Role, ROLES } from "constants/roles";
+import { useModalStore } from "stores/useModalStore";
 
 interface LayoutProps {
     children: React.ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
-    const [openLogout, setOpenLogout] = useState(false);
+    const { openLogout, setOpenLogout } = useModalStore()
     const navigate = useNavigate();
     const userRole = (Cookies.get('role') as Role);
     const firstName = Cookies.get('firstname')
@@ -68,7 +68,6 @@ const Layout = ({ children }: LayoutProps) => {
             <Navbar 
                 appName="ListaKo" 
                 bgColor="bg-[#0B1F3A] backdrop-blur-md"
-                avatarSrc='/images/app-logo.png'
                 dropdownItems={headerNavItems}
                 userName={userName}
                 userNameColor="text-white"
