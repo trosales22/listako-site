@@ -20,7 +20,7 @@ const RegisterPage: React.FC = () => {
         resolver: zodResolver(userSchema)
     });
 
-    const registerMutation = useRegisterUserMutation({
+    const { mutate: registerUser, isPending: isRegisterUserLoading } = useRegisterUserMutation({
         onSuccess: (res) => {
             const role = res?.data?.details?.role
 
@@ -40,7 +40,7 @@ const RegisterPage: React.FC = () => {
     });
 
     const onSubmit = (data: UserFormData) => {
-        registerMutation.mutate(data);
+        registerUser(data);
     };
 
     return (
@@ -117,7 +117,14 @@ const RegisterPage: React.FC = () => {
                         {...register("password")}
                     />
 
-                    <Button variant="black" type="submit" className="w-full text-lg py-4 rounded-xl">Register</Button>
+                    <Button 
+                        variant="black" 
+                        type="submit" 
+                        className="w-full text-lg py-4 rounded-xl"
+                        disabled={isRegisterUserLoading}
+                    >
+                        {isRegisterUserLoading ? 'Loading..' : 'Register'}
+                    </Button>
 
                     <div className="text-center">
                         Already have an account?{" "}

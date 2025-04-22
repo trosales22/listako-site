@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
         resolver: zodResolver(loginSchema)
     });
 
-    const loginMutation = useLoginMutation({
+    const { mutate: login, isPending: isLoginLoading } = useLoginMutation({
         onSuccess: (res) => {
             const role = res?.data?.details?.role
 
@@ -45,7 +45,7 @@ const LoginPage: React.FC = () => {
     });
 
     const onSubmit = (data: LoginData) => {
-        loginMutation.mutate(data);
+        login(data);
     };
 
     return (
@@ -88,7 +88,14 @@ const LoginPage: React.FC = () => {
                         <Link to="/forgot-password" className="text-sm text-black hover:underline">Forgot password?</Link>
                     </div>
 
-                    <Button variant="black" type="submit" className="w-full text-lg py-4 rounded-xl">Login</Button>
+                    <Button 
+                        variant="black" 
+                        type="submit" 
+                        className="w-full text-lg py-4 rounded-xl"
+                        disabled={isLoginLoading}
+                    >
+                        {isLoginLoading ? 'Loading..' : 'Login'}
+                    </Button>
 
                     <div className="text-center">
                         Don't have an account?{" "}
