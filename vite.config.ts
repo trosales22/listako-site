@@ -19,6 +19,7 @@ export default defineConfig({
       endpoints: path.resolve("src/endpoints"),
       utils: path.resolve("src/utils"),
       types: path.resolve("src/types"),
+      stores: path.resolve("src/stores"),
       transformers: path.resolve("src/transformers"),
     },
   },

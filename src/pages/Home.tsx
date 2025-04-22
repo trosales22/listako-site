@@ -10,12 +10,11 @@ import { Task } from "types/task";
 import { toast } from 'react-toastify';
 import EditTaskForm from "components/modules/task/forms/EditTaskForm";
 import { useQueryClient } from "@tanstack/react-query";
+import { useModalStore } from "stores/useModalStore";
 
 const HomePage: React.FC = () => {
     const queryClient = useQueryClient();
-    const [openAdd, setOpenAdd] = useState(false);
-    const [openEdit, setOpenEdit] = useState(false);
-    const [openDelete, setOpenDelete] = useState(false);
+    const { openCreateTask, openEditTask, openDeleteTask, setOpenCreateTask, setOpenEditTask, setOpenDeleteTask } = useModalStore();
     const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -35,20 +34,20 @@ const HomePage: React.FC = () => {
 
     const onShowEditDialogHandler = (taskId: string) => {
         setSelectedTaskId(taskId)
-        setOpenEdit(true)
+        setOpenEditTask(true)
     }
 
     const { mutate: deleteTask, isPending: isDeleteTaskLoading } = useDeleteTaskMutation({
         onSuccess: () => {
             toast.success("Deleted task successfully.");
             queryClient.invalidateQueries({ queryKey: ['TASK_LIST'] });
-            setOpenDelete(false);
+            setOpenDeleteTask(false);
         },
         onError: () => {}
     });
 
     const onShowDeleteConfirmation = (taskId: string | null) => {
-        setOpenDelete(true);
+        setOpenDeleteTask(true);
         setSelectedTaskId(taskId);
     };
 
@@ -64,7 +63,7 @@ const HomePage: React.FC = () => {
                 <div className="flex justify-between items-center">
                     <h1 className="text-2xl font-bold">Tasks</h1>
                     {tasks.length > 0 && (
-                        <Button className="text-sm" variant="black" onClick={() => setOpenAdd(true)}>
+                        <Button className="text-sm" variant="black" onClick={() => setOpenCreateTask(true)}>
                             <Plus className="w-4 h-4 mr-2" /> Add Task
                         </Button>
                     )}
@@ -89,7 +88,7 @@ const HomePage: React.FC = () => {
                 ) : tasks.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-20 space-y-4">
                         <p className="text-gray-500">No tasks yet.</p>
-                        <Button className="text-sm" variant="black" onClick={() => setOpenAdd(true)}>
+                        <Button className="text-sm" variant="black" onClick={() => setOpenCreateTask(true)}>
                             <Plus className="w-4 h-4 mr-2" /> Add Task
                         </Button>
                     </div>
@@ -158,13 +157,13 @@ const HomePage: React.FC = () => {
                 title="Add Task"
                 closeButton
                 closeOnBackdrop
-                isOpen={openAdd}
+                isOpen={openCreateTask}
                 size="sm"
-                onClose={() => setOpenAdd(false)}
+                onClose={() => setOpenCreateTask(false)}
                 headerColor="blue"
             >
-                {openAdd && (
-                    <AddTaskForm onClose={() => setOpenAdd(false)} />
+                {openCreateTask && (
+                    <AddTaskForm onClose={() => setOpenCreateTask(false)} />
                 )}
             </Modal>
 
@@ -173,28 +172,28 @@ const HomePage: React.FC = () => {
                 title="Edit Task"
                 closeButton
                 closeOnBackdrop
-                isOpen={openEdit}
+                isOpen={openEditTask}
                 size="sm"
-                onClose={() => setOpenEdit(false)}
+                onClose={() => setOpenEditTask(false)}
                 headerColor="blue"
             >
-                {openEdit && (
-                    <EditTaskForm taskId={selectedTaskId} onClose={() => setOpenEdit(false)} />
+                {openEditTask && (
+                    <EditTaskForm taskId={selectedTaskId} onClose={() => setOpenEditTask(false)} />
                 )}
             </Modal>
 
             <Modal
                 id="delete-task-modal"
                 title="Confirm Deletion"
-                isOpen={openDelete}
-                onClose={() => setOpenDelete(false)}
+                isOpen={openDeleteTask}
+                onClose={() => setOpenDeleteTask(false)}
                 headerColor="red"
             >
-                {openDelete && (
+                {openDeleteTask && (
                     <>
                     <p>Are you sure you want to delete this task?</p>
                     <div className="flex justify-end space-x-2 mt-4">
-                        <Button variant="ghost" onClick={() => setOpenDelete(false)}>No</Button>
+                        <Button variant="ghost" onClick={() => setOpenDeleteTask(false)}>No</Button>
                         <Button 
                             variant="danger" 
                             className="text-white" 
