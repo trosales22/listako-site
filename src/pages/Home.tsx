@@ -4,14 +4,18 @@ import { Button, Modal, Pagination, SearchInput } from "components/ui/components
 import { useState } from "react";
 import { CalendarIcon, CheckCircleIcon, MessageCircleWarning, PencilIcon, Plus, TrashIcon } from "lucide-react";
 import AddTaskForm from "components/modules/task/forms/AddTaskForm";
-import { useListTaskQuery } from "hooks/task";
+import { useDeleteTaskMutation, useListTaskQuery } from "hooks/task";
 import { debounce } from "lodash";
 import { Task } from "types/task";
+import { toast } from 'react-toastify';
 import EditTaskForm from "components/modules/task/forms/EditTaskForm";
+import { useQueryClient } from "@tanstack/react-query";
 
 const HomePage: React.FC = () => {
+    const queryClient = useQueryClient();
     const [openAdd, setOpenAdd] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
+    const [openDelete, setOpenDelete] = useState(false);
     const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -34,6 +38,26 @@ const HomePage: React.FC = () => {
         setOpenEdit(true)
     }
 
+    const { mutate: deleteTask, isPending: isDeleteTaskLoading } = useDeleteTaskMutation({
+        onSuccess: () => {
+            toast.success("Deleted task successfully.");
+            queryClient.invalidateQueries({ queryKey: ['TASK_LIST'] });
+            setOpenDelete(false);
+        },
+        onError: () => {}
+    });
+
+    const onShowDeleteConfirmation = (taskId: string | null) => {
+        setOpenDelete(true);
+        setSelectedTaskId(taskId);
+    };
+
+    const onDeleteTaskHandler = () => {
+        deleteTask({
+            taskId: selectedTaskId
+        })
+    }
+    
     return (
         <Layout>
             <div className="space-y-6">
@@ -90,6 +114,7 @@ const HomePage: React.FC = () => {
                                         />
                                         <TrashIcon 
                                             className="w-4 h-4 text-red-500 hover:scale-105 cursor-pointer transition" 
+                                            onClick={() => onShowDeleteConfirmation(task?.id)}
                                         />
                                         </div>
                                     </div>
@@ -155,6 +180,29 @@ const HomePage: React.FC = () => {
             >
                 {openEdit && (
                     <EditTaskForm taskId={selectedTaskId} onClose={() => setOpenEdit(false)} />
+                )}
+            </Modal>
+
+            <Modal
+                id="delete-task-modal"
+                title="Confirm Deletion"
+                isOpen={openDelete}
+                onClose={() => setOpenDelete(false)}
+                headerColor="red"
+            >
+                {openDelete && (
+                    <>
+                    <p>Are you sure you want to delete this task?</p>
+                    <div className="flex justify-end space-x-2 mt-4">
+                        <Button variant="ghost" onClick={() => setOpenDelete(false)}>No</Button>
+                        <Button 
+                            variant="danger" 
+                            className="text-white" 
+                            onClick={onDeleteTaskHandler}
+                            disabled={isDeleteTaskLoading}
+                        >{isDeleteTaskLoading ? 'Deleting..' : 'Yes'}</Button>
+                    </div>
+                    </>
                 )}
             </Modal>
         </Layout>
