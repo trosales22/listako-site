@@ -40,6 +40,12 @@ const RegisterPage: React.FC = () => {
     });
 
     const onSubmit = (data: UserFormData) => {
+        if (document.activeElement instanceof HTMLElement) {
+            document.activeElement.blur();
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
         registerUser(data);
     };
 
