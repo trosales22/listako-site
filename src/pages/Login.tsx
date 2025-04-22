@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
 
     useEffect(() => {
         if (authStatus === 'authenticated') {
-            navigate("/tasks");
+            navigate("/");
         }
     }, []);
 

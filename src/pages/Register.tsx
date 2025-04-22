@@ -32,7 +32,7 @@ const RegisterPage: React.FC = () => {
             Cookies.set('lastname', res?.data?.details?.lastname);
             Cookies.set('role', role);
 
-            navigate("/tasks");
+            navigate("/");
         },
         onError: () => {
             toast.error("Registration failed. Please try again.");

@@ -19,7 +19,7 @@ function App() {
         <Route path="/sign-up" element={<RegisterPage />} />
 
         <Route element={<ProtectedRoute allowedRoles={[ROLES.USER]} />}>
-          <Route path="/tasks" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Routes>

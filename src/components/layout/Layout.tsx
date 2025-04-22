@@ -51,7 +51,7 @@ const Layout = ({ children }: LayoutProps) => {
     ];
 
     const allMenuItems = [
-        { label: "Tasks", icon: <ListTodo className="h-5 w-5" />, path: "/tasks", roles: [ROLES.USER] }, 
+        { label: "Tasks", icon: <ListTodo className="h-5 w-5" />, path: "/", roles: [ROLES.USER] }, 
         { label: "Settings", icon: <Settings className="h-5 w-5" />, path: "/settings", roles: [ROLES.USER] }
     ];
 
