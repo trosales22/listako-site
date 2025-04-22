@@ -3,6 +3,12 @@
   themes: pastel, cupcake, corporate, winter;
 }
 
+@layer base {
+  input, textarea, select {
+    @apply text-base;
+  }
+}
+
 .app-background {
   background-image: url('/images/app-banner.jpg');
   background-size: cover; /* Ensures the image covers the entire container */
