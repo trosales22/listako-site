@@ -60,6 +60,8 @@ const RegisterPage: React.FC = () => {
                     />
                 </div>
 
+                <h1 className="text-2xl font-bold text-center">Create your account</h1>
+
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                         <Input

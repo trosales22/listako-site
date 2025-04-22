@@ -59,6 +59,8 @@ const LoginPage: React.FC = () => {
                     />
                 </div>
 
+                <h1 className="text-2xl font-bold text-center">Login to your account</h1>
+
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                     <Input
                         label="User ID"
