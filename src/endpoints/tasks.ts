@@ -11,7 +11,7 @@ export const getTaskList = (params: TaskListParams) => axios.get(`/api/v1/site/m
     params: params
 });
 
-export const getTaskById = (taskId: string | undefined) => axios.get(`/api/v1/site/me/tasks/${taskId}`);
+export const getTaskById = (taskId: string | undefined | null) => axios.get(`/api/v1/site/me/tasks/${taskId}`);
 
 export const createTask = (payload: any) => axios.post(`/api/v1/site/me/tasks`, payload);
 

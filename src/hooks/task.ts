@@ -9,7 +9,7 @@ type TaskListParams = {
 };
 
 type TaskShowParams = {
-    taskId?: string | undefined;
+    taskId?: string | undefined | null;
     queryOptions?: UseQueryOptions;
 };
 

@@ -7,9 +7,12 @@ import AddTaskForm from "components/modules/task/forms/AddTaskForm";
 import { useListTaskQuery } from "hooks/task";
 import { debounce } from "lodash";
 import { Task } from "types/task";
+import EditTaskForm from "components/modules/task/forms/EditTaskForm";
 
 const HomePage: React.FC = () => {
     const [openAdd, setOpenAdd] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
+    const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(25);
@@ -25,6 +28,11 @@ const HomePage: React.FC = () => {
     const tasks: Task[] = response?.data?.data || [];
     const totalItems = response?.data?.meta?.pagination?.total || 0;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+    const onShowEditDialogHandler = (taskId: string) => {
+        setSelectedTaskId(taskId)
+        setOpenEdit(true)
+    }
 
     return (
         <Layout>
@@ -65,34 +73,45 @@ const HomePage: React.FC = () => {
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                             {tasks.map((task, index) => (
-                                <Card
-                                    key={index}
-                                    className="p-4 space-y-4 bg-white shadow-md rounded-lg hover:shadow-lg transition-shadow duration-300"
+                               <Card
+                                key={index}
+                                className="p-3 bg-white border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow duration-200 group"
                                 >
-                                    <h2 className="font-semibold text-lg text-gray-900">{task?.attributes?.name}</h2>
-                                    <p className="text-sm text-gray-600">{task?.attributes?.description}</p>
-
-                                    <div className="flex flex-col sm:flex-row sm:space-x-4 mt-2">
+                                    <div className="flex justify-between items-start">
+                                        <div className="space-y-0.5">
+                                        <h2 className="font-medium text-base text-gray-900">{task?.attributes?.name}</h2>
+                                        <p className="text-sm text-gray-600 line-clamp-2">{task?.attributes?.description}</p>
+                                        </div>
+                                    
+                                        <div className="flex items-center space-x-3">
+                                        <PencilIcon 
+                                            className="w-4 h-4 text-orange-500 hover:scale-105 cursor-pointer transition" 
+                                            onClick={() => onShowEditDialogHandler(task?.id)}
+                                        />
+                                        <TrashIcon 
+                                            className="w-4 h-4 text-red-500 hover:scale-105 cursor-pointer transition" 
+                                        />
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="flex flex-col sm:flex-row sm:justify-between mt-2 text-xs text-gray-500 space-y-1 sm:space-y-0">
+                                        <div className="flex items-center space-x-4">
                                         <div className="flex items-center space-x-1">
-                                            <CheckCircleIcon className="w-4 h-4 text-green-500" />
-                                            <span className="text-sm">{task?.attributes?.status?.label}</span>
+                                            <CheckCircleIcon className="w-3.5 h-3.5 text-green-500" />
+                                            <span>{task?.attributes?.status?.label}</span>
                                         </div>
-                                        <div className="flex items-center space-x-1 mt-2 sm:mt-0">
-                                            <MessageCircleWarning className="w-4 h-4 text-red-500" />
-                                            <span className="text-sm">{task?.attributes?.priority?.label}</span>
+                                        <div className="flex items-center space-x-1">
+                                            <MessageCircleWarning className="w-3.5 h-3.5 text-red-500" />
+                                            <span>{task?.attributes?.priority?.label}</span>
                                         </div>
-                                    </div>
-
-                                    <div className="flex items-center space-x-1 text-xs text-gray-400 mt-2">
-                                        <CalendarIcon className="w-4 h-4 text-gray-400" />
+                                        </div>
+                                    
+                                        <div className="flex items-center space-x-1 sm:justify-end">
+                                        <CalendarIcon className="w-3.5 h-3.5 text-gray-400" />
                                         <span>{task?.attributes?.created_at}</span>
+                                        </div>
                                     </div>
-
-                                    <div className="ml-auto mt-4 sm:mt-0 flex items-center space-x-5">
-                                        <PencilIcon color="orange" className="w-5 h-5 cursor-pointer" />
-                                        <TrashIcon color="red" className="w-5 h-5 cursor-pointer" />
-                                    </div>
-                                </Card>
+                                </Card>                                                  
                             ))}
                         </div>
 
@@ -121,6 +140,21 @@ const HomePage: React.FC = () => {
             >
                 {openAdd && (
                     <AddTaskForm onClose={() => setOpenAdd(false)} />
+                )}
+            </Modal>
+
+            <Modal
+                id="edit-task-modal"
+                title="Edit Task"
+                closeButton
+                closeOnBackdrop
+                isOpen={openEdit}
+                size="sm"
+                onClose={() => setOpenEdit(false)}
+                headerColor="blue"
+            >
+                {openEdit && (
+                    <EditTaskForm taskId={selectedTaskId} onClose={() => setOpenEdit(false)} />
                 )}
             </Modal>
         </Layout>
