@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
+    "types": ["@types/node"],
     "paths": {
       "@assets/*": ["assets/*"],
       "@pages/*": ["pages/*"],
