@@ -18,6 +18,7 @@ export default defineConfig({
       hooks: path.resolve("src/hooks"),
       endpoints: path.resolve("src/endpoints"),
       utils: path.resolve("src/utils"),
+      types: path.resolve("src/types"),
       transformers: path.resolve("src/transformers"),
     },
   },

@@ -13,6 +13,7 @@
       "@hooks/*": ["hooks/*"],
       "@endpoints/*": ["endpoints/*"],
       "@utils/*": ["utils/*"],
+      "@types/*": ["types/*"],
       "@transformers/*": ["transformers/*"]
     }
   },

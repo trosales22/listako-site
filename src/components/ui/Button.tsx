@@ -5,6 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "danger" | "black" | "red";
   className?: string;
   tooltip?: string;
+  icon?: ReactNode;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -12,6 +13,7 @@ const Button: FC<ButtonProps> = ({
   variant = "primary",
   className = "",
   tooltip = "",
+  icon,
   ...props
 }) => {
   const variantClass = {
@@ -29,6 +31,7 @@ const Button: FC<ButtonProps> = ({
       className={`btn ${variantClass[variant]} ${className}`}
       {...props}
     >
+      {icon && <span className="mr-2">{icon}</span>} {/* If there's an icon, display it */}
       {children}
     </button>
   );

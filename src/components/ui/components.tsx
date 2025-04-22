@@ -1,6 +1,7 @@
 
 
 import Input from "./Input"
+import SearchInput from "./SearchInput"
 import TextArea from "./TextArea"
 import Select from "./Select"
 import Button from "./Button"
@@ -17,6 +18,7 @@ import Toggle from "./Toggle"
 
 export {
     Input,
+    SearchInput,
     TextArea,
     Select,
     Button,
