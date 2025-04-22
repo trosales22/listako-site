@@ -55,7 +55,7 @@ const RegisterPage: React.FC = () => {
                 </div>
 
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
                         <Input
                             label="Username"
                             type="text"
@@ -120,7 +120,7 @@ const RegisterPage: React.FC = () => {
                     <Button 
                         variant="black" 
                         type="submit" 
-                        className="w-full text-lg py-4 rounded-xl"
+                        className="w-full text-sm py-4 rounded-md"
                         disabled={isRegisterUserLoading}
                     >
                         {isRegisterUserLoading ? 'Loading..' : 'Register'}

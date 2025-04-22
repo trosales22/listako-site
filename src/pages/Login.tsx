@@ -91,7 +91,7 @@ const LoginPage: React.FC = () => {
                     <Button 
                         variant="black" 
                         type="submit" 
-                        className="w-full text-lg py-4 rounded-xl"
+                        className="w-full text-sm py-4 rounded-md"
                         disabled={isLoginLoading}
                     >
                         {isLoginLoading ? 'Loading..' : 'Login'}
