@@ -40,7 +40,7 @@ const TextArea: FC<TextAreaProps> = ({
 
   const textareaElement = (
     <textarea 
-      className={`textarea h-24 ${sizeClass} ${colorClass} ${widthClass} ${className}`} 
+      className={`textarea h-24 ${sizeClass} ${colorClass} ${widthClass} ${className} text-base`} 
       {...props} 
     />
   );

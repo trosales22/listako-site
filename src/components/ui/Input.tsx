@@ -72,7 +72,7 @@ const Input: FC<InputProps> = ({
       <div className={`input flex items-center ${className}`}>
         {icon && <span className="h-[1em] opacity-50">{icon}</span>}
         <input
-          className="w-full py-2 px-3 focus:outline-none bg-transparent"
+          className="w-full py-2 px-3 focus:outline-none bg-transparent text-base"
           onFocus={handleFocus}
           onBlur={handleBlur}
           {...props}

@@ -32,7 +32,7 @@ const Select: FC<SelectProps> = ({
         <div className="flex items-center gap-2">
           {legend && <label className="ml-2 text-sm font-medium">{legend}</label>}
           <select
-            className={`select ${className}`}
+            className={`select ${className} text-base`}
             defaultValue={defaultValue}
             {...props}
           >
