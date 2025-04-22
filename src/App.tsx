@@ -9,6 +9,7 @@ import ProtectedRoute from "components/ProtectedRoute";
 import { ROLES } from "constants/roles";
 import RegisterPage from "pages/Register";
 import SettingsPage from "pages/Settings";
+import NotFoundPage from "pages/NotFound";
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
       <ToastContainer />

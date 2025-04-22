@@ -66,7 +66,7 @@ const LoginPage: React.FC = () => {
                         label="User ID"
                         type="text"
                         placeholder="Enter user ID"
-                        className="text-xl py-4"
+                        className="text-base py-3"
                         fieldset
                         legend="User ID"
                         requirementColor="text-red-500"
@@ -78,7 +78,7 @@ const LoginPage: React.FC = () => {
                         label="Password"
                         type="password"
                         placeholder="Enter password"
-                        className="text-xl py-4"
+                        className="text-base py-3"
                         fieldset
                         legend="Password"
                         requirementColor="text-red-500"

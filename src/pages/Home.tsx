@@ -73,7 +73,7 @@ const HomePage: React.FC = () => {
                     <SearchInput
                         onChange={handleSearchChange}
                         placeholder="Search tasks..."
-                        className="sm:w-1/2"
+                        className="sm:w-1/4"
                     />
                 </div>
 
