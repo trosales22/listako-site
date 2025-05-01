@@ -1,55 +1,70 @@
-import { useMutation, UseMutationOptions, useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { AxiosResponse } from 'axios';
-import * as fns from 'endpoints/auth';
+import {
+  useMutation,
+  UseMutationOptions,
+  useQuery,
+  UseQueryOptions,
+} from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import * as fns from "endpoints/auth";
 
 type MyProfileParams = {
   queryOptions?: UseQueryOptions;
 };
 
-export const useLoginMutation = (mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, any>) => {
+export const useLoginMutation = (
+  mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, any>,
+) => {
   return useMutation({
-    mutationKey: ['LOGIN'],
+    mutationKey: ["LOGIN"],
     mutationFn: (payload) => fns.login(payload),
-    ...mutationOptions
+    ...mutationOptions,
   });
 };
 
-export const useLogoutMutation = (mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, unknown>) => {
+export const useLogoutMutation = (
+  mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, unknown>,
+) => {
   return useMutation({
-    mutationKey: ['LOGOUT'],
+    mutationKey: ["LOGOUT"],
     mutationFn: () => fns.logout(),
-    ...mutationOptions
+    ...mutationOptions,
   });
 };
 
 export const useMyProfile = ({ queryOptions }: MyProfileParams) => {
   return useQuery({
-    queryKey: ['MY_PROFILE'],
+    queryKey: ["MY_PROFILE"],
     queryFn: () => fns.myProfile(),
-    ...queryOptions
+    ...queryOptions,
   });
 };
 
-export const useUpdateMyProfileMutation = (mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, any>) => {
+export const useUpdateMyProfileMutation = (
+  mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, any>,
+) => {
   return useMutation({
-    mutationKey: ['UPDATE_MY_PROFILE'],
+    mutationKey: ["UPDATE_MY_PROFILE"],
     mutationFn: (payload) => fns.updateMyProfile(payload),
-    ...mutationOptions
+    ...mutationOptions,
   });
 };
 
-export const useChangePasswordMutation = (mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, any>) => {
+export const useChangePasswordMutation = (
+  mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, any>,
+) => {
   return useMutation({
-    mutationKey: ['CHANGE_PASSWORD'],
+    mutationKey: ["CHANGE_PASSWORD"],
     mutationFn: (payload) => fns.changePassword(payload),
-    ...mutationOptions
+    ...mutationOptions,
   });
 };
 
-export const useRegisterUserMutation = (mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, any>) => {
+export const useRegisterUserMutation = (
+  mutationOptions?: UseMutationOptions<AxiosResponse<any>, unknown, any>,
+) => {
   return useMutation({
-    mutationKey: ['REGISTER'],
+    mutationKey: ["REGISTER"],
     mutationFn: (payload) => fns.registerUser(payload),
-    ...mutationOptions
+    ...mutationOptions,
   });
 };

@@ -21,7 +21,7 @@ const Select: FC<SelectProps> = ({
   className = "",
   legend,
   helperText,
-  helperColor = '',
+  helperColor = "",
   defaultValue = "",
   inlineLegend = false,
   ...props
@@ -30,14 +30,20 @@ const Select: FC<SelectProps> = ({
     <fieldset className="fieldset">
       {inlineLegend ? (
         <div className="flex items-center gap-2">
-          {legend && <label className="ml-2 text-sm font-medium">{legend}</label>}
+          {legend && (
+            <label className="ml-2 text-sm font-medium">{legend}</label>
+          )}
           <select
             className={`select ${className} text-base`}
             defaultValue={defaultValue}
             {...props}
           >
             {options.map((option, index) => (
-              <option key={index} value={option.value} disabled={option.disabled}>
+              <option
+                key={index}
+                value={option.value}
+                disabled={option.disabled}
+              >
                 {option.label}
               </option>
             ))}
@@ -52,14 +58,20 @@ const Select: FC<SelectProps> = ({
             {...props}
           >
             {options.map((option, index) => (
-              <option key={index} value={option.value} disabled={option.disabled}>
+              <option
+                key={index}
+                value={option.value}
+                disabled={option.disabled}
+              >
                 {option.label}
               </option>
             ))}
           </select>
         </>
       )}
-      {helperText && <span className={`fieldset-label ${helperColor}`}>{helperText}</span>}
+      {helperText && (
+        <span className={`fieldset-label ${helperColor}`}>{helperText}</span>
+      )}
     </fieldset>
   );
 };

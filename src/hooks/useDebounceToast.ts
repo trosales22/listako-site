@@ -1,5 +1,5 @@
-import { debounce } from 'lodash';
-import toast from 'react-hot-toast';
+import { debounce } from "lodash";
+import toast from "react-hot-toast";
 
 export function useDebouncedToast() {
   const debouncedToastInfo = debounce((message: string) => {

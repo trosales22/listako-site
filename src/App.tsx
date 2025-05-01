@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import './App.css'
-import { Toaster } from 'react-hot-toast';
-import Wrapper from 'components/Wrapper'
+import "./App.css";
+import { Toaster } from "react-hot-toast";
+import Wrapper from "components/Wrapper";
 import HomePage from "pages/Home";
 import LoginPage from "pages/Login";
 import ProtectedRoute from "components/ProtectedRoute";
@@ -9,7 +9,6 @@ import { ROLES } from "constants/roles";
 import RegisterPage from "pages/Register";
 import SettingsPage from "pages/Settings";
 import NotFoundPage from "pages/NotFound";
-
 
 function App() {
   return (
@@ -29,7 +28,7 @@ function App() {
 
       <Toaster />
     </Wrapper>
-  )
+  );
 }
 
-export default App
+export default App;

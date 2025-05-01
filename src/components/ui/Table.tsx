@@ -19,7 +19,7 @@ const Table: FC<TableProps> = ({
   children,
   className = "",
   bordered = false,
-  rounded = false
+  rounded = false,
 }) => {
   return (
     <div

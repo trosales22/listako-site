@@ -1,12 +1,12 @@
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuthData } from 'hooks/useAuthData';
+import { Navigate, Outlet } from "react-router-dom";
+import { useAuthData } from "hooks/useAuthData";
 
 interface ProtectedRouteProps {
   allowedRoles: string[];
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
-  const { role: userRole, isAuthenticated  } = useAuthData();
+  const { role: userRole, isAuthenticated } = useAuthData();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
