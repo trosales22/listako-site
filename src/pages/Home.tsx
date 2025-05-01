@@ -7,7 +7,7 @@ import AddTaskForm from "components/modules/task/forms/AddTaskForm";
 import { useDeleteTaskMutation, useListTaskQuery } from "hooks/task";
 import { debounce } from "lodash";
 import { Task } from "types/task";
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import EditTaskForm from "components/modules/task/forms/EditTaskForm";
 import { useQueryClient } from "@tanstack/react-query";
 import { useModalStore } from "stores/useModalStore";
@@ -155,7 +155,6 @@ const HomePage: React.FC = () => {
             <Modal
                 id="add-task-modal"
                 title="Add Task"
-                closeButton
                 closeOnBackdrop
                 isOpen={openCreateTask}
                 size="sm"
@@ -170,7 +169,6 @@ const HomePage: React.FC = () => {
             <Modal
                 id="edit-task-modal"
                 title="Edit Task"
-                closeButton
                 closeOnBackdrop
                 isOpen={openEditTask}
                 size="sm"

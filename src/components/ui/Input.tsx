@@ -1,89 +1,43 @@
-import { FC, InputHTMLAttributes, ReactNode, useState } from "react";
+import { FC, InputHTMLAttributes, ReactNode } from 'react';
+import { FieldError } from 'react-hook-form';
 
-interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
+interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   icon?: ReactNode;
-  badge?: ReactNode;
+  error?: FieldError | string;
   className?: string;
-  ghost?: boolean;
-  color?: "neutral" | "primary" | "secondary" | "accent" | "info" | "success" | "warning" | "error";
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  fieldset?: boolean;
-  legend?: string;
-  requirementLabel?: string;
-  requirementColor?: string;
 }
 
-const Input: FC<InputProps> = ({
-  label,
-  icon,
-  badge,
-  className = "",
-  ghost,
-  color,
-  size,
-  fieldset,
-  legend,
-  requirementLabel = '',
-  requirementColor = '',
-  ...props
-}) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [hasValue, setHasValue] = useState(!!props.value);
-
-  const handleFocus = () => setIsFocused(true);
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(false);
-    setHasValue(!!e.target.value);
-  };
-
-  const inputClass = [
-    "w-full",
-    "bg-transparent",
-    "outline-none",
-    "text-sm md:text-base",
-    "px-3 py-2",
-    ghost ? "input-ghost" : "border rounded-md",
-    color ? `input-${color}` : "border-gray-300 focus:border-blue-500",
-    size === "xs" ? "text-xs" :
-    size === "sm" ? "text-sm" :
-    size === "lg" ? "text-lg" :
-    size === "xl" ? "text-xl" : "",
-    className,
-  ].filter(Boolean).join(" ");
-
-  if (fieldset) {
-    return (
-      <fieldset className="w-full">
-        {legend && <legend className="mb-1 text-sm text-gray-600">{legend}</legend>}
-        <input className={inputClass} {...props} />
-        {requirementLabel && <p className={`text-xs mt-1 ${requirementColor}`}>{requirementLabel}</p>}
-      </fieldset>
-    );
-  }
+const Input: FC<InputFieldProps> = ({ label, icon, error, className = '', ...props }) => {
+  const hasError = !!error;
 
   return (
-    <div className="relative w-full">
+    <div className="form-control w-full">
       {label && (
-        <label
-          className={`absolute left-3 pointer-events-none transition-all duration-200 text-gray-500 ${
-            isFocused || hasValue ? "text-xs top-1" : "top-1/2 -translate-y-1/2 text-sm"
-          }`}
-        >
-          {label}
+        <label htmlFor={props.id} className="label px-1">
+          <span className="label-text text-sm font-medium text-black">{label}</span>
         </label>
       )}
 
-      <div className="flex items-center border rounded-md px-2 py-1 bg-white w-full">
-        {icon && <span className="mr-2 opacity-60">{icon}</span>}
+      <div
+        className={`flex items-center rounded-lg px-3 py-2 transition-all duration-150 ${
+          hasError
+            ? 'border border-error focus-within:ring-2 focus-within:ring-error'
+            : 'border border-gray-300 focus-within:ring-2 focus-within:ring-primary'
+        } ${className}`}
+      >
+        {icon && <span className="mr-2 text-gray-400">{icon}</span>}
         <input
-          className="flex-1 bg-transparent text-sm md:text-base outline-none"
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          className="w-full p-0 bg-transparent text-sm focus:outline-none placeholder-gray-400"
           {...props}
         />
-        {badge && <span className="ml-2">{badge}</span>}
       </div>
+
+      {hasError && (
+        <p className="text-error text-xs mt-1 px-1">
+          {typeof error === 'string' ? error : error.message}
+        </p>
+      )}
     </div>
   );
 };

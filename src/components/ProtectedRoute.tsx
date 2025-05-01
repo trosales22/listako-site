@@ -1,13 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { useAuthData } from 'hooks/useAuthData';
 
 interface ProtectedRouteProps {
   allowedRoles: string[];
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
-  const userRole = Cookies.get('role')
-  const isAuthenticated: boolean = Cookies.get('auth_status') === 'authenticated';
+  const { role: userRole, isAuthenticated  } = useAuthData();
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;

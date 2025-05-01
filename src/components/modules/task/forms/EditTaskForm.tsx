@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input, Button, TextArea, Select } from 'components/ui/components';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import { useQueryClient } from "@tanstack/react-query";
 import { useShowTaskByIdQuery, useUpdateTaskMutation } from "hooks/task";
 import { TaskFormData, taskSchema } from "schemas/taskSchema";
@@ -60,14 +60,11 @@ const EditTaskForm: FC<EditTaskFormProps> = ({ taskId, onClose }) => {
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-2 bg-white rounded-lg min-h-[300px]"
         >
-            <Input
+             <Input
                 label="Task Name"
                 type="text"
                 placeholder="Enter task name"
-                fieldset
-                legend="Name"
-                requirementLabel={errors.name?.message}
-                requirementColor="text-red-500"
+                error={errors.name?.message}
                 {...register("name")}
             />
 

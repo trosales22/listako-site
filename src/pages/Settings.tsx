@@ -6,12 +6,13 @@ import { UserFormData, userSchema } from "schemas/userSchema";
 import { useEffect } from "react";
 import { useChangePasswordMutation, useMyProfile, useUpdateMyProfileMutation } from "hooks/auth";
 import Button from "components/ui/Button";
-import { toast } from 'react-toastify';
-import Cookies from "js-cookie";
+import { toast } from 'react-hot-toast';
 import { useQueryClient } from "@tanstack/react-query";
 import { UpdatePasswordFormData, updatePasswordSchema } from "schemas/updatePasswordSchema";
+import { useSetAuthField } from "hooks/useSetAuthField";
 
 const SettingsPage = () => {
+     const { setAuthField } = useSetAuthField();
     const queryClient = useQueryClient()
     const {
         watch,
@@ -45,10 +46,10 @@ const SettingsPage = () => {
 
     const { mutate: updateMyProfile, isPending: isUpdateMyProfileLoading } = useUpdateMyProfileMutation({
         onSuccess: () => {
-            toast.info("Profile updated successfully.")
+            toast.success("Profile updated successfully.")
 
-            Cookies.set('firstname', watch().firstname)
-            Cookies.set('lastname', watch().lastname)
+            setAuthField('firstname', watch().firstname);
+            setAuthField('lastname', watch().lastname);
 
             reset()
             queryClient.invalidateQueries({ queryKey: ['MY_PROFILE'] })
@@ -58,8 +59,7 @@ const SettingsPage = () => {
 
     const { mutate: changePassword, isPending: isChangePasswordLoading } = useChangePasswordMutation({
         onSuccess: () => {
-            toast.info("Password updated successfully.")
-
+            toast.success("Password updated successfully.")
             updatePasswordReset()
         },
         onError: () => {}
@@ -90,10 +90,7 @@ const SettingsPage = () => {
                                 label="Username" 
                                 type="text" 
                                 placeholder="Enter username" 
-                                fieldset 
-                                legend="Username" 
-                                requirementLabel={errors.username && errors.username.message} 
-                                requirementColor="text-red-500"
+                                error={errors.username && errors.username.message} 
                                 {...register("username")}
                             />
 
@@ -101,10 +98,7 @@ const SettingsPage = () => {
                                 label="Email" 
                                 type="email" 
                                 placeholder="Enter email" 
-                                fieldset 
-                                legend="Email" 
-                                requirementLabel={errors.email && errors.email.message} 
-                                requirementColor={errors.email ? 'text-red-500' : "text-black"} 
+                                error={errors.email && errors.email.message}  
                                 {...register("email")}
                             />
                         </div>
@@ -114,10 +108,7 @@ const SettingsPage = () => {
                                 label="Firstname" 
                                 type="text" 
                                 placeholder="Enter firstname" 
-                                fieldset 
-                                legend="First name" 
-                                requirementLabel={errors.firstname && errors.firstname.message} 
-                                requirementColor="text-red-500"
+                                error={errors.firstname && errors.firstname.message} 
                                 {...register("firstname")}
                             />
 
@@ -125,10 +116,7 @@ const SettingsPage = () => {
                                 label="Lastname" 
                                 type="text" 
                                 placeholder="Enter lastname" 
-                                fieldset 
-                                legend="Last name" 
-                                requirementLabel={errors.lastname && errors.lastname.message} 
-                                requirementColor="text-red-500"
+                                error={errors.lastname && errors.lastname.message} 
                                 {...register("lastname")}
                             />
                         </div>
@@ -149,10 +137,7 @@ const SettingsPage = () => {
                                 label="Old Password" 
                                 type="password" 
                                 placeholder="Enter old password" 
-                                fieldset 
-                                legend="Old Password" 
-                                requirementLabel={updatePasswordErrors.old_password && updatePasswordErrors.old_password.message} 
-                                requirementColor="text-red-500"
+                                error={updatePasswordErrors.old_password && updatePasswordErrors.old_password.message} 
                                 {...updatePasswordRegister("old_password")}
                             />
 
@@ -160,10 +145,7 @@ const SettingsPage = () => {
                                 label="New Password" 
                                 type="password" 
                                 placeholder="Enter new password" 
-                                fieldset 
-                                legend="New Password" 
-                                requirementLabel={updatePasswordErrors.new_password && updatePasswordErrors.new_password.message} 
-                                requirementColor="text-red-500"
+                                error={updatePasswordErrors.new_password && updatePasswordErrors.new_password.message} 
                                 {...updatePasswordRegister("new_password")}
                             />
                         </div>

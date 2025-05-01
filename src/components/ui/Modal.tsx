@@ -1,107 +1,90 @@
-import React, { useRef, useEffect } from "react";
+import React, { ReactNode, useEffect, useRef } from 'react';
 
 interface ModalProps {
   id: string;
-  title: string;
-  children: React.ReactNode;
-  closeButton?: boolean;
-  closeOnBackdrop?: boolean;
-  size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "full";
-  responsive?: boolean;
+  title?: string;
+  children: ReactNode;
   isOpen: boolean;
-  onClose: () => void;
-  headerColor?: "blue" | "red" | "green" | "gray" | "orange";
+  size?: 'sm' | 'md' | 'lg';
+  headerColor?: 'blue' | 'red' | 'green' | 'yellow' | 'gray';
+  closeOnBackdrop?: boolean;
+  onClose?: () => void;
 }
+
+const sizeClasses: Record<NonNullable<ModalProps['size']>, string> = {
+  sm: 'w-11/12 max-w-sm',
+  md: 'w-11/12 max-w-md',
+  lg: 'w-11/12 max-w-3xl',
+};
+
+const headerColors: Record<string, string> = {
+  blue: 'text-blue-600',
+  red: 'text-red-600',
+  green: 'text-green-600',
+  yellow: 'text-yellow-600',
+  gray: 'text-gray-600',
+};
 
 const Modal: React.FC<ModalProps> = ({
   id,
   title,
   children,
-  closeButton = true,
-  closeOnBackdrop = true,
-  size = "md",
-  responsive = true,
   isOpen,
+  size = 'md',
+  headerColor = 'gray',
+  closeOnBackdrop = false,
   onClose,
-  headerColor = "gray",
 }) => {
-  const modalRef = useRef<HTMLDialogElement>(null);
+  const modalRef = useRef<HTMLDialogElement | null>(null);
 
+  // Show/hide modal based on `isOpen`
   useEffect(() => {
-    if (isOpen) {
-      modalRef.current?.showModal();
-    } else {
-      modalRef.current?.close();
+    const modal = modalRef.current;
+    if (!modal) return;
+
+    if (isOpen && !modal.open) {
+      modal.showModal();
+    } else if (!isOpen && modal.open) {
+      modal.close();
     }
   }, [isOpen]);
 
-  // New useEffect to handle Escape key or other close actions
+  // Close on backdrop
   useEffect(() => {
-    const handleModalClose = () => {
-      if (modalRef.current && !modalRef.current.open) {
-        onClose();
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        closeOnBackdrop &&
+        modalRef.current &&
+        e.target instanceof Element &&
+        e.target.classList.contains('modal')
+      ) {
+        modalRef.current.close();
+        if (onClose) onClose();
       }
     };
 
-    const modalElement = modalRef.current;
-    modalElement?.addEventListener("close", handleModalClose);
-
-    return () => modalElement?.removeEventListener("close", handleModalClose);
-  }, [onClose]);
-
-  // Define header colors
-  const headerBgColor = {
-    blue: "bg-blue-500 text-white",
-    red: "bg-red-500 text-white",
-    green: "bg-green-500 text-white",
-    gray: "bg-gray-200 text-gray-900",
-    orange: "bg-orange-400 text-white"
-  }[headerColor];
-
-  const widthClass = (() => {
-    const widths = {
-      sm: "sm:max-w-sm",
-      md: "sm:max-w-md",
-      lg: "sm:max-w-lg",
-      xl: "sm:max-w-2xl",
-      "2xl": "sm:max-w-3xl",
-      "3xl": "sm:max-w-4xl",
-      "4xl": "sm:max-w-5xl",
-      "5xl": "sm:max-w-6xl",
-      "6xl": "sm:max-w-7xl",
-      full: "sm:w-full",
-    };
-  
-    // Set a reasonable default max width on mobile
-    const baseMobileMaxWidth = "max-w-[90vw]";
-  
-    return `${baseMobileMaxWidth} ${responsive ? widths[size] : ""}`;
-  })();
+    const modal = modalRef.current;
+    modal?.addEventListener('click', handleClickOutside);
+    return () => modal?.removeEventListener('click', handleClickOutside);
+  }, [closeOnBackdrop, onClose]);
 
   return (
-    <dialog
-      id={id}
-      ref={modalRef}
-      className={`modal ${responsive ? "sm:modal-middle" : "modal-bottom"}`}
-    >
-      <div className={`modal-box mx-4 ${widthClass} p-0 overflow-hidden rounded-lg shadow-md`}>
-        <div className={`p-4 ${headerBgColor} flex justify-between items-center`}>
-          <h3 className="font-bold text-lg">{title}</h3>
-          {closeButton && (
-            <button className="btn btn-sm btn-circle btn-ghost bg-transparent text-white hover:bg-transparent" onClick={onClose}>
-              ✕
-            </button>
-          )}
-        </div>
+    <dialog id={id} ref={modalRef} className="modal">
+      <div className={`modal-box ${sizeClasses[size]}`}>
+        <button
+          type="button"
+          onClick={() => {
+            modalRef.current?.close();
+            onClose?.();
+          }}
+          className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+        >
+          ✕
+        </button>
 
-        <div className="p-4 max-h-[70vh] overflow-y-auto">{children}</div>
+        {title && <h3 className={`font-bold text-lg ${headerColors[headerColor]}`}>{title}</h3>}
+        <div className="overflow-y-auto max-h-[60vh] sm:max-h-[70vh] py-2">{children}</div>
       </div>
-
-      {closeOnBackdrop && (
-        <form method="dialog" className="modal-backdrop" onClick={onClose}>
-          <button>Close</button>
-        </form>
-      )}
     </dialog>
   );
 };

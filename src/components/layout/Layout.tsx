@@ -3,12 +3,13 @@ import Navbar from "components/layout/Navbar";
 import Sidebar from "components/layout/Sidebar";
 import Wrapper from "../Wrapper";
 import { Button, Modal } from "components/ui/components";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "hooks/auth";
-import Cookies from "js-cookie";
-import { Role, ROLES } from "constants/roles";
+import { ROLES } from "constants/roles";
 import { useModalStore } from "stores/useModalStore";
+import { useAuthData } from "hooks/useAuthData";
+import { useRemoveAuthField } from "hooks/useRemoveAuthField";
 
 interface LayoutProps {
     children: React.ReactNode;
@@ -17,20 +18,18 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
     const { openLogout, setOpenLogout } = useModalStore()
     const navigate = useNavigate();
-    const userRole = (Cookies.get('role') as Role);
-    const firstName = Cookies.get('firstname')
-    const lastName = Cookies.get('lastname')
-    const userName = firstName && lastName ? `${firstName} ${lastName}` : "Unknown";
-
+    const { role, firstname, lastname } = useAuthData();
+    const userName = firstname && lastname ? `${firstname} ${lastname}` : 'Unknown';
+    const { removeAuthField } = useRemoveAuthField();
     const { mutate: logout, isPending: isLogoutLoading } = useLogoutMutation({
         onSuccess: () => {
             toast.success("Successfully logged out.");
-
-            Cookies.remove('auth_status');
-            Cookies.remove('firstname');
-            Cookies.remove('lastname');
-            Cookies.remove('token');
-            Cookies.remove('role');
+            
+            removeAuthField('auth_status');
+            removeAuthField('firstname');
+            removeAuthField('lastname');
+            removeAuthField('token');
+            removeAuthField('role');
 
             navigate("/login");
         },
@@ -55,18 +54,18 @@ const Layout = ({ children }: LayoutProps) => {
         { label: "Settings", icon: <Settings className="h-5 w-5" />, path: "/settings", roles: [ROLES.USER] }
     ];
 
-    const sidebarMenuItems = allMenuItems.filter(item => item.roles.includes(userRole));
+    const sidebarMenuItems = allMenuItems.filter(item => item.roles.includes(role));
     
     const roleMap: Record<string, string> = {
         [ROLES.USER]: 'User'
     };
     
-    const formattedRole = roleMap[userRole] || 'Unknown';
+    const formattedRole = roleMap[role] || 'Unknown';
 
     return (
         <Wrapper>
             <Navbar 
-                appName="ListaKo" 
+                appName="ListaKo Portal" 
                 bgColor="bg-[#0B1F3A] backdrop-blur-md"
                 dropdownItems={headerNavItems}
                 userName={userName}
