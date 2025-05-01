@@ -1,76 +1,49 @@
 import { FC, TextareaHTMLAttributes } from "react";
+import { FieldError } from "react-hook-form";
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
-  fieldset?: boolean;
-  legend?: string;
-  optionalLabel?: string;
-  optionalLabelColor?: string;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  color?:
-    | "primary"
-    | "secondary"
-    | "accent"
-    | "neutral"
-    | "info"
-    | "success"
-    | "warning"
-    | "error";
-  width?: "full" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl";
+  error?: FieldError | string;
   className?: string;
 }
 
 const TextArea: FC<TextAreaProps> = ({
   label,
-  fieldset = false,
-  legend,
-  optionalLabel,
-  optionalLabelColor = "",
-  size,
-  color,
-  width = "full",
+  error,
   className = "",
   ...props
 }) => {
-  const sizeClass = size ? `textarea-${size}` : "";
-  const colorClass = color ? `textarea-${color}` : "";
-
-  // Width mapping
-  const widthClass = {
-    full: "w-full",
-    sm: "max-w-sm",
-    md: "max-w-md",
-    lg: "max-w-lg",
-    xl: "max-w-xl",
-    "2xl": "max-w-2xl",
-    "3xl": "max-w-3xl",
-  }[width];
-
-  const textareaElement = (
-    <textarea
-      className={`textarea h-24 ${sizeClass} ${colorClass} ${widthClass} ${className}`}
-      {...props}
-    />
-  );
-
-  if (fieldset) {
-    return (
-      <fieldset className="fieldset">
-        {legend && <legend className="fieldset-legend">{legend}</legend>}
-        {textareaElement}
-        {optionalLabel && (
-          <div className={`fieldset-label ${optionalLabelColor}`}>
-            {optionalLabel}
-          </div>
-        )}
-      </fieldset>
-    );
-  }
+  const hasError = !!error;
 
   return (
-    <div className="flex flex-col">
-      {label && <label className="mb-1 text-sm font-medium">{label}</label>}
-      {textareaElement}
+    <div className="form-control w-full">
+      {label && (
+        <label htmlFor={props.id} className="label px-1">
+          <span className="label-text text-sm font-medium text-black">
+            {label}
+          </span>
+        </label>
+      )}
+
+      <div
+        className={`rounded-lg px-3 py-2 transition-all duration-150 ${
+          hasError
+            ? "border border-error focus-within:ring-2 focus-within:ring-error"
+            : "border border-gray-300 focus-within:ring-2 focus-within:ring-primary"
+        } ${className}`}
+      >
+        <textarea
+          className="w-full bg-transparent text-sm focus:outline-none placeholder-gray-400 resize-none"
+          rows={4}
+          {...props}
+        />
+      </div>
+
+      {hasError && (
+        <p className="text-error text-xs mt-1 px-1">
+          {typeof error === "string" ? error : error?.message}
+        </p>
+      )}
     </div>
   );
 };

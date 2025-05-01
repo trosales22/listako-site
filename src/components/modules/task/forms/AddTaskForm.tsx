@@ -47,7 +47,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ onClose }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-2 bg-white rounded-lg min-h-[300px]"
+      className="flex flex-col gap-2 bg-white rounded-lg min-h-[300px] p-2"
     >
       <Input
         label="Task Name"
@@ -59,11 +59,7 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ onClose }) => {
 
       <TextArea
         label="Description"
-        fieldset
-        legend="Description"
-        width="full"
-        optionalLabel={errors.description?.message || "Optional"}
-        optionalLabelColor={errors.description ? "text-red-500" : "text-black"}
+        error={errors.description?.message}
         {...register("description")}
       />
 
@@ -71,7 +67,6 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ onClose }) => {
         <Select
           {...register("status")}
           legend="Status"
-          helperText="Required"
           helperColor={errors.status ? "text-red-500" : "text-black"}
           defaultValue=""
           options={taskStatuses}
@@ -81,7 +76,6 @@ const AddTaskForm: FC<AddTaskFormProps> = ({ onClose }) => {
         <Select
           {...register("priority")}
           legend="Priority"
-          helperText="Required"
           helperColor={errors.priority ? "text-red-500" : "text-black"}
           defaultValue=""
           options={taskPriorityStatuses}

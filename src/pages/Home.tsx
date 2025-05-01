@@ -198,7 +198,7 @@ const HomePage: React.FC = () => {
         title="Add Task"
         closeOnBackdrop
         isOpen={openCreateTask}
-        size="sm"
+        size="md"
         onClose={() => setOpenCreateTask(false)}
         headerColor="blue"
       >
@@ -212,7 +212,7 @@ const HomePage: React.FC = () => {
         title="Edit Task"
         closeOnBackdrop
         isOpen={openEditTask}
-        size="sm"
+        size="md"
         onClose={() => setOpenEditTask(false)}
         headerColor="blue"
       >
