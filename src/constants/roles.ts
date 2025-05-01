@@ -1,5 +1,5 @@
-export type Role = "USER";
+export type Role = 'USER';
 
 export const ROLES: Record<string, string> = {
-  USER: "USER",
+  USER: 'USER',
 };

@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Search } from "lucide-react";
+import { FC } from 'react';
+import { Search } from 'lucide-react';
 
 interface SearchInputProps {
   value?: string;
@@ -11,7 +11,7 @@ interface SearchInputProps {
 const SearchInput: FC<SearchInputProps> = ({
   value,
   onChange,
-  placeholder = "Search...",
+  placeholder = 'Search...',
   className,
 }) => {
   return (

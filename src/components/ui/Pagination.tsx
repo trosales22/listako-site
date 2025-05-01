@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 interface PaginationProps {
   totalPages: number;
   currentPage: number;
   onPageChange: (page: number) => void;
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   totalItems: number;
   itemsPerPage: number;
   setItemsPerPage: (value: number) => void;
@@ -14,7 +14,7 @@ const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   currentPage,
   onPageChange,
-  size = "md",
+  size = 'md',
   totalItems,
   itemsPerPage,
   setItemsPerPage,
@@ -54,7 +54,7 @@ const Pagination: React.FC<PaginationProps> = ({
               <button
                 key={pageNumber}
                 className={`join-item btn btn-${size} ${
-                  currentPage === pageNumber ? "btn-active" : ""
+                  currentPage === pageNumber ? 'btn-active' : ''
                 }`}
                 onClick={() => onPageChange(pageNumber)}
               >

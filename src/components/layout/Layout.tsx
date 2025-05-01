@@ -1,15 +1,15 @@
-import { ListTodo, Settings } from "lucide-react";
-import Navbar from "components/layout/Navbar";
-import Sidebar from "components/layout/Sidebar";
-import Wrapper from "../Wrapper";
-import { Button, Modal } from "components/ui/components";
-import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { useLogoutMutation } from "hooks/auth";
-import { ROLES } from "constants/roles";
-import { useModalStore } from "stores/useModalStore";
-import { useAuthData } from "hooks/useAuthData";
-import { useRemoveAuthField } from "hooks/useRemoveAuthField";
+import { ListTodo, Settings } from 'lucide-react';
+import Navbar from 'components/layout/Navbar';
+import Sidebar from 'components/layout/Sidebar';
+import Wrapper from '../Wrapper';
+import { Button, Modal } from 'components/ui/components';
+import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from 'hooks/auth';
+import { ROLES } from 'constants/roles';
+import { useModalStore } from 'stores/useModalStore';
+import { useAuthData } from 'hooks/useAuthData';
+import { useRemoveAuthField } from 'hooks/useRemoveAuthField';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,20 +19,19 @@ const Layout = ({ children }: LayoutProps) => {
   const { openLogout, setOpenLogout } = useModalStore();
   const navigate = useNavigate();
   const { role, firstname, lastname } = useAuthData();
-  const userName =
-    firstname && lastname ? `${firstname} ${lastname}` : "Unknown";
+  const userName = firstname && lastname ? `${firstname} ${lastname}` : 'Unknown';
   const { removeAuthField } = useRemoveAuthField();
   const { mutate: logout, isPending: isLogoutLoading } = useLogoutMutation({
     onSuccess: () => {
-      toast.success("Successfully logged out.");
+      toast.success('Successfully logged out.');
 
-      removeAuthField("auth_status");
-      removeAuthField("firstname");
-      removeAuthField("lastname");
-      removeAuthField("token");
-      removeAuthField("role");
+      removeAuthField('auth_status');
+      removeAuthField('firstname');
+      removeAuthField('lastname');
+      removeAuthField('token');
+      removeAuthField('role');
 
-      navigate("/login");
+      navigate('/login');
     },
     onError: () => {},
   });
@@ -46,34 +45,32 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   const headerNavItems = [
-    { label: "Settings", onClick: () => navigate("/settings") },
-    { label: "Logout", onClick: onShowLogoutModal },
+    { label: 'Settings', onClick: () => navigate('/settings') },
+    { label: 'Logout', onClick: onShowLogoutModal },
   ];
 
   const allMenuItems = [
     {
-      label: "Tasks",
+      label: 'Tasks',
       icon: <ListTodo className="h-5 w-5" />,
-      path: "/",
+      path: '/',
       roles: [ROLES.USER],
     },
     {
-      label: "Settings",
+      label: 'Settings',
       icon: <Settings className="h-5 w-5" />,
-      path: "/settings",
+      path: '/settings',
       roles: [ROLES.USER],
     },
   ];
 
-  const sidebarMenuItems = allMenuItems.filter((item) =>
-    item.roles.includes(role),
-  );
+  const sidebarMenuItems = allMenuItems.filter((item) => item.roles.includes(role));
 
   const roleMap: Record<string, string> = {
-    [ROLES.USER]: "User",
+    [ROLES.USER]: 'User',
   };
 
-  const formattedRole = roleMap[role] || "Unknown";
+  const formattedRole = roleMap[role] || 'Unknown';
 
   return (
     <Wrapper>
@@ -117,7 +114,7 @@ const Layout = ({ children }: LayoutProps) => {
             onClick={onLogoutHander}
             disabled={isLogoutLoading}
           >
-            {isLogoutLoading ? "Logging out.." : "Yes"}
+            {isLogoutLoading ? 'Logging out..' : 'Yes'}
           </Button>
         </div>
       </Modal>

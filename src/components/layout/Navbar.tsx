@@ -1,7 +1,7 @@
-import { FC, ReactNode, useState } from "react";
-import { Menu, UserCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "components/ui/components";
+import { FC, ReactNode, useState } from 'react';
+import { Menu, UserCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from 'components/ui/components';
 
 interface DropdownItem {
   label: string;
@@ -30,23 +30,21 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = ({
   appName,
-  bgColor = "bg-base-100",
+  bgColor = 'bg-base-100',
   dropdownItems,
   indicatorContent,
   indicatorBadge,
   userName,
-  userNameColor = "text-white",
+  userNameColor = 'text-white',
   role,
-  roleTextColor = "text-gray-300",
+  roleTextColor = 'text-gray-300',
   sidebarItems = [],
 }) => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <>
-      <div
-        className={`navbar ${bgColor} shadow-sm fixed top-0 left-0 right-0 z-50`}
-      >
+      <div className={`navbar ${bgColor} shadow-sm fixed top-0 left-0 right-0 z-50`}>
         <div className="flex-1 flex items-center gap-2">
           <button
             className="md:hidden text-white p-2"
@@ -60,17 +58,11 @@ const Navbar: FC<NavbarProps> = ({
         <div className="flex-none hidden md:flex items-center gap-4">
           {indicatorContent && (
             <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle"
-              >
+              <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                 <div className="indicator">
                   {indicatorContent}
                   {indicatorBadge && (
-                    <span className="badge badge-sm indicator-item">
-                      {indicatorBadge}
-                    </span>
+                    <span className="badge badge-sm indicator-item">{indicatorBadge}</span>
                   )}
                 </div>
               </div>
@@ -88,13 +80,9 @@ const Navbar: FC<NavbarProps> = ({
               </div>
               <div className="flex flex-col text-left">
                 {userName && (
-                  <span className={`text-md font-semibold ${userNameColor}`}>
-                    {userName}
-                  </span>
+                  <span className={`text-md font-semibold ${userNameColor}`}>{userName}</span>
                 )}
-                {role && (
-                  <span className={`text-xs ${roleTextColor}`}>{role}</span>
-                )}
+                {role && <span className={`text-xs ${roleTextColor}`}>{role}</span>}
               </div>
             </div>
             <ul
@@ -133,21 +121,14 @@ const Navbar: FC<NavbarProps> = ({
                 </div>
                 <div>
                   {userName && (
-                    <div className={`text-sm font-semibold ${userNameColor}`}>
-                      {userName}
-                    </div>
+                    <div className={`text-sm font-semibold ${userNameColor}`}>{userName}</div>
                   )}
-                  {role && (
-                    <div className={`text-xs ${roleTextColor}`}>{role}</div>
-                  )}
+                  {role && <div className={`text-xs ${roleTextColor}`}>{role}</div>}
                 </div>
               </div>
 
               <Button
-                onClick={
-                  dropdownItems.find((i) => i.label.toLowerCase() === "logout")
-                    ?.onClick
-                }
+                onClick={dropdownItems.find((i) => i.label.toLowerCase() === 'logout')?.onClick}
                 variant="red"
                 className="w-full text-left text-sm rounded mb-3"
               >
@@ -162,9 +143,7 @@ const Navbar: FC<NavbarProps> = ({
                       className="flex items-center gap-4 hover:bg-white/10 p-3 rounded"
                       onClick={() => setMobileMenuOpen(false)}
                     >
-                      <div className="flex items-center justify-center">
-                        {item.icon}
-                      </div>
+                      <div className="flex items-center justify-center">{item.icon}</div>
                       <span>{item.label}</span>
                     </Link>
                   </li>

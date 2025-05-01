@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 
 interface StatCardProps {
   label: string;
@@ -6,11 +6,7 @@ interface StatCardProps {
   color?: string;
 }
 
-const StatCard: FC<StatCardProps> = ({
-  label,
-  value,
-  color = "text-gray-800",
-}) => {
+const StatCard: FC<StatCardProps> = ({ label, value, color = 'text-gray-800' }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-center">
       <h2 className="text-lg font-semibold">{label}</h2>

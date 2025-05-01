@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Link } from "react-router-dom";
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
 interface SidebarItem {
   label: string;
@@ -14,14 +14,12 @@ interface SidebarProps {
 }
 
 const Sidebar: FC<SidebarProps> = ({
-  bgColor = "bg-base-200",
-  sidebarProps = "hover:bg-base-300",
+  bgColor = 'bg-base-200',
+  sidebarProps = 'hover:bg-base-300',
   items,
 }) => {
   return (
-    <div
-      className={`h-full w-72 ${bgColor} shadow-lg fixed top-16 left-0 z-5 hidden md:block`}
-    >
+    <div className={`h-full w-72 ${bgColor} shadow-lg fixed top-16 left-0 z-5 hidden md:block`}>
       <ul className="menu rounded-box w-full">
         {items.map((item, index) => (
           <li key={index} className="w-full mb-2">

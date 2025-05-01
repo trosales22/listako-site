@@ -1,12 +1,7 @@
-import Layout from "components/layout/Layout";
-import Card from "components/ui/Card";
-import {
-  Button,
-  Modal,
-  Pagination,
-  SearchInput,
-} from "components/ui/components";
-import { useState } from "react";
+import Layout from 'components/layout/Layout';
+import Card from 'components/ui/Card';
+import { Button, Modal, Pagination, SearchInput } from 'components/ui/components';
+import { useState } from 'react';
 import {
   CalendarIcon,
   CheckCircleIcon,
@@ -14,15 +9,15 @@ import {
   PencilIcon,
   Plus,
   TrashIcon,
-} from "lucide-react";
-import AddTaskForm from "components/modules/task/forms/AddTaskForm";
-import { useDeleteTaskMutation, useListTaskQuery } from "hooks/task";
-import { debounce } from "lodash";
-import { Task } from "types/task";
-import { toast } from "react-hot-toast";
-import EditTaskForm from "components/modules/task/forms/EditTaskForm";
-import { useQueryClient } from "@tanstack/react-query";
-import { useModalStore } from "stores/useModalStore";
+} from 'lucide-react';
+import AddTaskForm from 'components/modules/task/forms/AddTaskForm';
+import { useDeleteTaskMutation, useListTaskQuery } from 'hooks/task';
+import { debounce } from 'lodash';
+import { Task } from 'types/task';
+import { toast } from 'react-hot-toast';
+import EditTaskForm from 'components/modules/task/forms/EditTaskForm';
+import { useQueryClient } from '@tanstack/react-query';
+import { useModalStore } from 'stores/useModalStore';
 
 const HomePage: React.FC = () => {
   const queryClient = useQueryClient();
@@ -35,16 +30,13 @@ const HomePage: React.FC = () => {
     setOpenDeleteTask,
   } = useModalStore();
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(25);
 
-  const handleSearchChange = debounce(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(e.target.value);
-    },
-    300,
-  );
+  const handleSearchChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  }, 300);
 
   const {
     data: response,
@@ -63,15 +55,14 @@ const HomePage: React.FC = () => {
     setOpenEditTask(true);
   };
 
-  const { mutate: deleteTask, isPending: isDeleteTaskLoading } =
-    useDeleteTaskMutation({
-      onSuccess: () => {
-        toast.success("Deleted task successfully.");
-        queryClient.invalidateQueries({ queryKey: ["TASK_LIST"] });
-        setOpenDeleteTask(false);
-      },
-      onError: () => {},
-    });
+  const { mutate: deleteTask, isPending: isDeleteTaskLoading } = useDeleteTaskMutation({
+    onSuccess: () => {
+      toast.success('Deleted task successfully.');
+      queryClient.invalidateQueries({ queryKey: ['TASK_LIST'] });
+      setOpenDeleteTask(false);
+    },
+    onError: () => {},
+  });
 
   const onShowDeleteConfirmation = (taskId: string | null) => {
     setOpenDeleteTask(true);
@@ -90,11 +81,7 @@ const HomePage: React.FC = () => {
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold">Tasks</h1>
           {tasks.length > 0 && (
-            <Button
-              className="text-sm"
-              variant="black"
-              onClick={() => setOpenCreateTask(true)}
-            >
+            <Button className="text-sm" variant="black" onClick={() => setOpenCreateTask(true)}>
               <Plus className="w-4 h-4 mr-2" /> Add Task
             </Button>
           )}
@@ -114,18 +101,12 @@ const HomePage: React.FC = () => {
           </div>
         ) : isError ? (
           <div className="flex justify-center items-center py-20">
-            <p className="text-red-500">
-              Failed to load tasks. Please try again later.
-            </p>
+            <p className="text-red-500">Failed to load tasks. Please try again later.</p>
           </div>
         ) : tasks.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 space-y-4">
             <p className="text-gray-500">No tasks yet.</p>
-            <Button
-              className="text-sm"
-              variant="black"
-              onClick={() => setOpenCreateTask(true)}
-            >
+            <Button className="text-sm" variant="black" onClick={() => setOpenCreateTask(true)}>
               <Plus className="w-4 h-4 mr-2" /> Add Task
             </Button>
           </div>
@@ -202,9 +183,7 @@ const HomePage: React.FC = () => {
         onClose={() => setOpenCreateTask(false)}
         headerColor="blue"
       >
-        {openCreateTask && (
-          <AddTaskForm onClose={() => setOpenCreateTask(false)} />
-        )}
+        {openCreateTask && <AddTaskForm onClose={() => setOpenCreateTask(false)} />}
       </Modal>
 
       <Modal
@@ -217,10 +196,7 @@ const HomePage: React.FC = () => {
         headerColor="blue"
       >
         {openEditTask && (
-          <EditTaskForm
-            taskId={selectedTaskId}
-            onClose={() => setOpenEditTask(false)}
-          />
+          <EditTaskForm taskId={selectedTaskId} onClose={() => setOpenEditTask(false)} />
         )}
       </Modal>
 
@@ -244,7 +220,7 @@ const HomePage: React.FC = () => {
                 onClick={onDeleteTaskHandler}
                 disabled={isDeleteTaskLoading}
               >
-                {isDeleteTaskLoading ? "Deleting.." : "Yes"}
+                {isDeleteTaskLoading ? 'Deleting..' : 'Yes'}
               </Button>
             </div>
           </>

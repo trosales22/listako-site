@@ -1,5 +1,5 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAuthData } from "hooks/useAuthData";
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuthData } from 'hooks/useAuthData';
 
 interface ProtectedRouteProps {
   allowedRoles: string[];

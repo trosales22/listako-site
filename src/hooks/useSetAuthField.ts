@@ -1,4 +1,4 @@
-const APP_KEY = import.meta.env.VITE_APP_KEY || "default";
+const APP_KEY = import.meta.env.VITE_APP_KEY || 'default';
 
 const setKey = (key: string) => `${APP_KEY}_${key}`;
 

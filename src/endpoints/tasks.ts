@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 interface TaskListParams {
   q?: string;
@@ -14,8 +14,7 @@ export const getTaskList = (params: TaskListParams) =>
 export const getTaskById = (taskId: string | undefined | null) =>
   axios.get(`/api/v1/site/me/tasks/${taskId}`);
 
-export const createTask = (payload: any) =>
-  axios.post(`/api/v1/site/me/tasks`, payload);
+export const createTask = (payload: any) => axios.post(`/api/v1/site/me/tasks`, payload);
 
 export const updateTask = (taskId: string | undefined, payload: any) =>
   axios.put(`/api/v1/site/me/tasks/${taskId}`, payload);

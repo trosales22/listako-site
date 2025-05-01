@@ -1,28 +1,28 @@
-import React, { ReactNode, useEffect, useRef } from "react";
+import React, { ReactNode, useEffect, useRef } from 'react';
 
 interface ModalProps {
   id: string;
   title?: string;
   children: ReactNode;
   isOpen: boolean;
-  size?: "sm" | "md" | "lg";
-  headerColor?: "blue" | "red" | "green" | "yellow" | "gray";
+  size?: 'sm' | 'md' | 'lg';
+  headerColor?: 'blue' | 'red' | 'green' | 'yellow' | 'gray';
   closeOnBackdrop?: boolean;
   onClose?: () => void;
 }
 
-const sizeClasses: Record<NonNullable<ModalProps["size"]>, string> = {
-  sm: "w-11/12 max-w-sm",
-  md: "w-11/12 max-w-md",
-  lg: "w-11/12 max-w-3xl",
+const sizeClasses: Record<NonNullable<ModalProps['size']>, string> = {
+  sm: 'w-11/12 max-w-sm',
+  md: 'w-11/12 max-w-md',
+  lg: 'w-11/12 max-w-3xl',
 };
 
 const headerColors: Record<string, string> = {
-  blue: "text-blue-600",
-  red: "text-red-600",
-  green: "text-green-600",
-  yellow: "text-yellow-600",
-  gray: "text-gray-600",
+  blue: 'text-blue-600',
+  red: 'text-red-600',
+  green: 'text-green-600',
+  yellow: 'text-yellow-600',
+  gray: 'text-gray-600',
 };
 
 const Modal: React.FC<ModalProps> = ({
@@ -30,8 +30,8 @@ const Modal: React.FC<ModalProps> = ({
   title,
   children,
   isOpen,
-  size = "md",
-  headerColor = "gray",
+  size = 'md',
+  headerColor = 'gray',
   closeOnBackdrop = false,
   onClose,
 }) => {
@@ -56,7 +56,7 @@ const Modal: React.FC<ModalProps> = ({
         closeOnBackdrop &&
         modalRef.current &&
         e.target instanceof Element &&
-        e.target.classList.contains("modal")
+        e.target.classList.contains('modal')
       ) {
         modalRef.current.close();
         if (onClose) onClose();
@@ -64,8 +64,8 @@ const Modal: React.FC<ModalProps> = ({
     };
 
     const modal = modalRef.current;
-    modal?.addEventListener("click", handleClickOutside);
-    return () => modal?.removeEventListener("click", handleClickOutside);
+    modal?.addEventListener('click', handleClickOutside);
+    return () => modal?.removeEventListener('click', handleClickOutside);
   }, [closeOnBackdrop, onClose]);
 
   return (
@@ -82,14 +82,8 @@ const Modal: React.FC<ModalProps> = ({
           ✕
         </button>
 
-        {title && (
-          <h3 className={`font-bold text-lg ${headerColors[headerColor]}`}>
-            {title}
-          </h3>
-        )}
-        <div className="overflow-y-auto max-h-[60vh] sm:max-h-[70vh] py-2">
-          {children}
-        </div>
+        {title && <h3 className={`font-bold text-lg ${headerColors[headerColor]}`}>{title}</h3>}
+        <div className="overflow-y-auto max-h-[60vh] sm:max-h-[70vh] py-2">{children}</div>
       </div>
     </dialog>
   );

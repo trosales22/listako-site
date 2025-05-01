@@ -2,11 +2,11 @@ export interface TaskAttributes {
   name: string;
   description: string;
   status: {
-    code: "pending" | "in_progress" | "completed";
+    code: 'pending' | 'in_progress' | 'completed';
     label: string;
   };
   priority: {
-    code: "low" | "medium" | "high";
+    code: 'low' | 'medium' | 'high';
     label: string;
   };
   created_at: string;

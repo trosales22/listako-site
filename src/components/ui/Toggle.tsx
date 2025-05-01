@@ -1,5 +1,5 @@
-import React from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import React from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 interface ToggleProps {
   label?: string;
@@ -7,11 +7,7 @@ interface ToggleProps {
   defaultChecked?: boolean;
 }
 
-const Toggle: React.FC<ToggleProps> = ({
-  label,
-  register,
-  defaultChecked = false,
-}) => {
+const Toggle: React.FC<ToggleProps> = ({ label, register, defaultChecked = false }) => {
   return (
     <div>
       <label className="fieldset-label mt-2">
